@@ -1,17 +1,18 @@
 'use client'
 
 import Link from 'next/link'
+import { Show, UserButton } from '@clerk/nextjs'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 // ── Theme Context ──────────────────────────────────────
 type Theme = 'dark' | 'light'
 const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({
-  theme: 'dark',
+  theme: 'light',
   toggle: () => {},
 })
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark')
+  const [theme, setTheme] = useState<Theme>('light')
 
   useEffect(() => {
     const stored = localStorage.getItem('devlog-theme') as Theme | null
@@ -145,7 +146,7 @@ function Navbar() {
           How it works
         </a>
         <a
-          href="https://github.com"
+          href="https://github.com/shubhamchauhan639"
           target="_blank"
           rel="noreferrer"
           className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
@@ -158,19 +159,41 @@ function Navbar() {
       <div className="flex items-center gap-3 flex-shrink-0">
         <ThemeToggle />
         <div className="w-px h-4 bg-[var(--border)]" />
-        <Link
-          href="/login"
-          className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
-        >
-          Sign in
-        </Link>
-        <div className="w-px h-4 bg-[var(--border)]" />
-        <Link
-          href="/login"
-          className="text-sm font-medium px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-colors"
-        >
-          Get started free
-        </Link>
+
+        {/* Signed-out state: show Sign in + Get started */}
+        <Show when="signed-out">
+          <Link
+            href="/sign-in"
+            className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+          >
+            Sign in
+          </Link>
+          <div className="w-px h-4 bg-[var(--border)]" />
+          <Link
+            href="/sign-up"
+            className="text-sm font-medium px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-colors"
+          >
+            Get started free
+          </Link>
+        </Show>
+
+        {/* Signed-in state: show Dashboard link + UserButton */}
+        <Show when="signed-in">
+          <Link
+            href="/dashboard"
+            className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+          >
+            Dashboard
+          </Link>
+          <div className="w-px h-4 bg-[var(--border)]" />
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox: 'w-7 h-7',
+              },
+            }}
+          />
+        </Show>
       </div>
     </nav>
   )
@@ -256,7 +279,7 @@ function StepRow({ step }: { step: Step }) {
 function GoogleButton({ label }: { label: string }) {
   return (
     <Link
-      href="/login"
+      href="/sign-in"
       className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors border border-gray-200 shadow-sm"
     >
       <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
