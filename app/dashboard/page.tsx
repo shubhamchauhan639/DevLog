@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import Sidebar from './components/sidebar'
+import MainContent from './components/MainContent'
+import ActivityGraph from './components/ActivityGraph'
 
 
 export default async function DashboardPage() {
@@ -14,6 +16,11 @@ export default async function DashboardPage() {
 
   const firstName = user.firstName ?? 'Developer'
   const email = user.emailAddresses[0]?.emailAddress ?? ''
+  const logs = [
+  { date: '2026-06-10', hours_code: 2 },
+  { date: '2026-06-11', hours_code: 5 },
+  { date: '2026-06-12', hours_code: 3 },
+]
 
   return (
     <>
@@ -32,6 +39,7 @@ export default async function DashboardPage() {
             <span className="text-sm font-medium text-gray-900">DevLog</span>
           </Link>
           <div className="flex items-center gap-4">
+            <span className="text-xs text-gray-400 hidden sm:block">{firstName}</span>
             <span className="text-xs text-gray-400 hidden sm:block">{email}</span>
             <UserButton
               appearance={{
@@ -42,11 +50,22 @@ export default async function DashboardPage() {
             />
           </div>
         </nav>
+ <div className="flex flex-1 bg-gray-50">
+  <Sidebar />
 
-       <div className="flex min-h-screen bg-gray-50">
-      <Sidebar/>
-      </div>
-      </div>
+  <div className="flex-1 p-6">
+    <MainContent firstname={firstName} />
+
+    <div className="mt-6">
+      <ActivityGraph
+        logs={logs}
+        currentStreak={10}
+        longestStreak={25}
+      />
+    </div>
+  </div>
+</div>
+</div>
     </>
   )
 }
