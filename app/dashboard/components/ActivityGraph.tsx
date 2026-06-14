@@ -160,6 +160,7 @@ export default function ActivityGraph({
                   className="text-xs text-gray-400"
                   style={{ width: `${width}px`, minWidth: `${width}px` }}
                 >
+                 
                   {ml.label}
                 </div>
               )
