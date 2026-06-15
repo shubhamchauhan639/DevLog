@@ -5,6 +5,10 @@ import Link from 'next/link'
 import Sidebar from './components/sidebar'
 import MainContent from './components/MainContent'
 import ActivityGraph from './components/ActivityGraph'
+import StatsRow from './components/StatsRow'
+import WeeklySummary from './components/WeeklySummary'
+import TodaysLog from './components/TodaysLog'
+import RecentLogs from './components/RecentLogs'
 
 
 export default async function DashboardPage() {
@@ -50,18 +54,30 @@ export default async function DashboardPage() {
             />
           </div>
         </nav>
- <div className="flex flex-1 bg-gray-50">
+ <div className="flex flex-1 bg-white">
   <Sidebar />
 
-  <div className="flex-1 p-6">
+  <div className="flex-1 p-8 max-w-5xl">
     <MainContent firstname={firstName} />
+
+    <StatsRow />
 
     <div className="mt-6">
       <ActivityGraph
         logs={logs}
-        currentStreak={10}
-        longestStreak={25}
+        currentStreak={12}
+        longestStreak={18}
       />
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+      <div className="col-span-1">
+        <WeeklySummary />
+      </div>
+      <div className="col-span-2 flex flex-col gap-6">
+        <TodaysLog />
+        <RecentLogs />
+      </div>
     </div>
   </div>
 </div>
