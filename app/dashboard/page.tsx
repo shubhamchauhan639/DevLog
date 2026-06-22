@@ -4,8 +4,7 @@ import { UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import Sidebar from './components/sidebar'
 import MainContent from './components/MainContent'
-import ActivityGraph from './components/ActivityGraph'
-import StatsRow from './components/StatsRow'
+import DashboardData from './components/DashboardData'
 import WeeklySummary from './components/WeeklySummary'
 import TodaysLog from './components/TodaysLog'
 import RecentLogs from './components/RecentLogs'
@@ -20,11 +19,6 @@ export default async function DashboardPage() {
 
   const firstName = user.firstName ?? 'Developer'
   const email = user.emailAddresses[0]?.emailAddress ?? ''
-  const logs = [
-  { date: '2026-06-10', hours_code: 2 },
-  { date: '2026-06-11', hours_code: 5 },
-  { date: '2026-06-12', hours_code: 3 },
-]
 
   return (
     <>
@@ -60,15 +54,7 @@ export default async function DashboardPage() {
   <div className="flex-1 p-8 max-w-5xl">
     <MainContent firstname={firstName} />
 
-    <StatsRow />
-
-    <div className="mt-6">
-      <ActivityGraph
-        logs={logs}
-        currentStreak={12}
-        longestStreak={18}
-      />
-    </div>
+    <DashboardData userId={user.id} />
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
       <div className="col-span-1">
