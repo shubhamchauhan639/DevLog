@@ -4,11 +4,10 @@ import { UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import Sidebar from './components/sidebar'
 import MainContent from './components/MainContent'
-import DashboardData from './components/DashboardData'
 import WeeklySummary from './components/WeeklySummary'
 import TodaysLog from './components/TodaysLog'
 import RecentLogs from './components/RecentLogs'
-
+import DashboardData from './components/DashboardData'
 
 export default async function DashboardPage() {
   const user = await currentUser()
@@ -19,6 +18,7 @@ export default async function DashboardPage() {
 
   const firstName = user.firstName ?? 'Developer'
   const email = user.emailAddresses[0]?.emailAddress ?? ''
+ 
 
   return (
     <>
@@ -54,7 +54,7 @@ export default async function DashboardPage() {
   <div className="flex-1 p-8 max-w-5xl">
     <MainContent firstname={firstName} />
 
-    <DashboardData userId={user.id} />
+   <DashboardData userId={user.id} />
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
       <div className="col-span-1">
@@ -69,5 +69,6 @@ export default async function DashboardPage() {
 </div>
 </div>
     </>
+    
   )
 }
