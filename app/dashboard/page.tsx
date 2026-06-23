@@ -61,7 +61,7 @@ export default async function DashboardPage() {
         <WeeklySummary />
       </div>
       <div className="col-span-2 flex flex-col gap-6">
-        <TodaysLog />
+        <TodaysLog userId={user.id} />
         <RecentLogs />
       </div>
     </div>
