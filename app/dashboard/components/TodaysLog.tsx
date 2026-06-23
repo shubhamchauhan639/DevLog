@@ -69,11 +69,9 @@ export default function TodaysLog({ userId }: { userId: string }) {
       console.error("Error saving log:", error);
       alert("Failed to save: " + error.message);
     } else {
+      console.log("Log saved successfully!", data);
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 3000);
-      
-      // Force a router refresh to update server components (if any depend on this)
-      window.location.reload();
     }
   };
 
