@@ -41,7 +41,10 @@ const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 // ── Helpers ────────────────────────────────────────────
 function formatDate(date: Date): string {
-  return date.toISOString().split('T')[0]
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 function getColorLevel(hours: number): number {
@@ -92,14 +95,15 @@ export default function ActivityGraph({
     const today = new Date()
     today.setHours(0, 0, 0, 0)
 
-    // Start on Monday 26 weeks ago
-    const start = new Date(today)
-    start.setDate(today.getDate() - WEEKS * DAYS_IN_WEEK + 1)
+    // Find the Monday of the current week
+    const dayOfWeek = today.getDay() || 7; // Sunday is 7, Monday is 1
+    const diffToMonday = 1 - dayOfWeek;
+    const currentMonday = new Date(today);
+    currentMonday.setDate(today.getDate() + diffToMonday);
 
-    // Adjust to nearest Monday
-    const dayOfWeek = start.getDay()
-    const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek
-    start.setDate(start.getDate() + diff)
+    // Start (WEEKS - 1) weeks before the current Monday
+    const start = new Date(currentMonday)
+    start.setDate(currentMonday.getDate() - (WEEKS - 1) * DAYS_IN_WEEK)
 
     const weeksData: CellData[][] = []
     const labels: { weekIndex: number; label: string }[] = []

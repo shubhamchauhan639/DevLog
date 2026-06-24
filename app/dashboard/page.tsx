@@ -58,11 +58,11 @@ export default async function DashboardPage() {
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
       <div className="col-span-1">
-        <WeeklySummary />
+        <WeeklySummary userId={user.id} />
       </div>
       <div className="col-span-2 flex flex-col gap-6">
         <TodaysLog userId={user.id} />
-        <RecentLogs />
+        <RecentLogs userId={user.id} />
       </div>
     </div>
   </div>
