@@ -15,17 +15,12 @@ export default function TodaysLog({ userId }: { userId: string }) {
 
   useEffect(() => {
     async function fetchTodaysLog() {
-      const d = new Date();
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      const todayStr = `${year}-${month}-${day}`;
-
+      const today = new Date().toISOString().split('T')[0];
       const { data, error } = await supabase
         .from("logs")
         .select("*")
         .eq("user_id", userId)
-        .eq("date", todayStr)
+        .eq("date", today)
         .maybeSingle();
       
       if (data) {
@@ -43,15 +38,11 @@ export default function TodaysLog({ userId }: { userId: string }) {
   const handleSave = async () => {
     setLoading(true);
     setIsSaved(false);
-    const d = new Date();
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const todayStr = `${year}-${month}-${day}`;
+    const today = new Date().toISOString().split('T')[0];
     
     const payload: any = {
       user_id: userId,
-      date: todayStr,
+      date: today,
       hours_code: parseFloat(hours) || 0,
       mood: mood,
       learned: learned
@@ -142,7 +133,7 @@ export default function TodaysLog({ userId }: { userId: string }) {
         >
           {loading ? "Saving..." : isSaved ? "Saved!" : "Save today's log"}
         </button>
-      </div>
+      </div> 
     </div>
   )
 }
