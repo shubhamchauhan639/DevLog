@@ -18,7 +18,6 @@ export default async function DashboardPage() {
 
   const firstName = user.firstName ?? 'Developer'
   const email = user.emailAddresses[0]?.emailAddress ?? ''
-  
  
 
   return (
