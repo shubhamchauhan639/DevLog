@@ -14,6 +14,7 @@ export default async function DashboardPage() {
 
   if (!user) {
     redirect('/sign-in')
+    
   }
 
   const firstName = user.firstName ?? 'Developer'
