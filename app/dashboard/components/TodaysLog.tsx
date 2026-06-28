@@ -4,6 +4,7 @@ import { Edit3 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 
+
 export default function TodaysLog({ userId }: { userId: string }) {
   const [hours, setHours] = useState("");
   const [mood, setMood] = useState("");
@@ -34,6 +35,8 @@ export default function TodaysLog({ userId }: { userId: string }) {
       fetchTodaysLog();
     }
   }, [userId]);
+
+  
 
   const handleSave = async () => {
     setLoading(true);
