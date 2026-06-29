@@ -33,7 +33,6 @@ export default function WeeklySummary({ userId }: { userId: string }) {
     const hours = logMap.get(dateStr) || 0;
     const isFuture = d > today;
 
-    // Calculate percentage height, assuming 8 hours is 100%
     const percent = Math.min((hours / 8) * 100, 100);
     
     return {
